@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "HTML (Soli)",
+  "scopeName": "text.html.soli",
+  "fileTypes": ["slv"],
+  "injections": {
+    "text.html.soli - (meta.embedded.block.soli | meta.embedded.line.soli | comment.block.soli.template), L:text.html.soli meta.tag, L:text.html.soli string": {
+      "patterns": [{ "include": "#tags" }]
+    }
+  },
+  "patterns": [
+    { "include": "#tags" },
+    { "include": "text.html.basic" }
+  ],
+  "repository": {
+    "tags": {
+      "patterns": [
+        {
+          "name": "comment.block.soli.template",
+          "begin": "<%#",
+          "end": "-?%>",
+          "captures": { "0": { "name": "punctuation.definition.comment.soli" } }
+        },
+        {
+          "name": "meta.embedded.line.soli",
+          "begin": "<%[=-]?",
+          "beginCaptures": { "0": { "name": "punctuation.section.embedded.begin.soli" } },
+          "end": "-?%>",
+          "endCaptures": { "0": { "name": "punctuation.section.embedded.end.soli" } },
+          "contentName": "source.soli",
+          "patterns": [
+            {
+              "name": "comment.line.number-sign.soli",
+              "match": "#(?!\\{).*?(?=-?%>)"
+            },
+            { "include": "source.soli" }
+          ]
+        }
+      ]
+    }
+  }
+}
